@@ -1,1 +1,1 @@
-from event.factory import EventFactory
+from .factory import EventFactory
