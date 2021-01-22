@@ -1,0 +1,30 @@
+name: Style check
+
+on: [push]
+
+
+
+
+jobs:
+  style-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Update pip
+      run: python -m pip install --upgrade pip
+
+    - name: Install dependencies
+      run: make update
+
+    - name: Style check (imports)
+      run: make check-imports
+
+    - name: Style check (code)
+      run: make check-code
