@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='google-pubsub-utils',
-    version='0.1.0',
+    version='0.2.0',
     author="Johan Niklasson",
     author_email="johan@niklasson.me",
     description="",
