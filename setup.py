@@ -1,4 +1,4 @@
-from setuptools import setup
+import setuptools
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -8,7 +8,7 @@ for package in setuptools.find_packages():
     if not package.startswith('tests'):
         packages.append(package)
 
-setup(
+setuptools.setup(
     name='google-pubsub-utils',
     version='0.3.0',
     author="Johan Niklasson",
