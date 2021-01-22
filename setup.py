@@ -10,7 +10,7 @@ for package in setuptools.find_packages():
 
 setup(
     name='google-pubsub-utils',
-    version='0.2.0',
+    version='0.3.0',
     author="Johan Niklasson",
     author_email="johan@niklasson.me",
     description="",
