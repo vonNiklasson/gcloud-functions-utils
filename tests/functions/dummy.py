@@ -1,5 +1,3 @@
-
-
 def dummy_function(event, context):
     """Background Cloud Function to be triggered by Pub/Sub.
     Args:
@@ -10,13 +8,4 @@ def dummy_function(event, context):
          metadata. The `event_id` field contains the Pub/Sub message ID. The
          `timestamp` field contains the publish time.
     """
-    import base64
-
-    print("""This Function was triggered by messageId {} published at {}
-    """.format(context.event_id, context.timestamp))
-
-    if 'data' in event:
-        name = base64.b64decode(event['data']).decode('utf-8')
-    else:
-        name = 'World'
-    print('Hello {}!'.format(name))
+    print(event)
