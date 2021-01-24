@@ -1,15 +1,15 @@
-name: Style check
+name: Run tests
 
 on: [push]
 
 jobs:
-  style-check:
-    name: Style check
+  deploy:
+    name: Tests
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
-    - uses: actions/checkout@v2
+      uses: actions/checkout@v2
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -22,8 +22,5 @@ jobs:
     - name: Install dependencies
       run: make update
 
-    - name: Style check (imports)
-      run: make check-imports
-
-    - name: Style check (code)
-      run: make check-code
+    - name: Run tests
+      run: python -m pytest tests
