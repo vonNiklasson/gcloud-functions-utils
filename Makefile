@@ -1,4 +1,4 @@
-SOURCE_FOLDER = google_pubsub_utils
+SOURCE_FOLDER = gcloud_functions_utils
 PYTHON ?= python3
 
 .PHONY: clean
@@ -24,7 +24,7 @@ check-code:
 
 .PHONY: reformat
 reformat:
-	isort --atomic $(SOURCE_FOLDER)
+	isort  --profile black --atomic $(SOURCE_FOLDER)
 	black $(SOURCE_FOLDER)
 
 .PHONY: tests

@@ -4,7 +4,14 @@ from datetime import datetime
 from typing import Dict
 
 
-class Event:
+class EventParser:
+
+    data: str
+    attributes: Dict[str, str]
+    message_id: int
+    publish_time: datetime
+    orderingKey: str
+
     def __init__(self, event):
         if "data" in event:
             try:
