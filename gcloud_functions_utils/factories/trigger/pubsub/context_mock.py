@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from gcloud_functions_utils.factories.triggers.pubsub import ContextEventType
+from .context_event_type import ContextEventType
 
 
 @dataclass

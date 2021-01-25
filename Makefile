@@ -16,16 +16,16 @@ check: check-imports check-code
 
 .PHONY: check-imports
 check-imports:
-	isort --check-only $(SOURCE_FOLDER)
+	isort --check-only $(SOURCE_FOLDER) tests/*
 
 .PHONY: check-code
 check-code:
-	black --check $(SOURCE_FOLDER)
+	black --check $(SOURCE_FOLDER) tests/*
 
 .PHONY: reformat
 reformat:
-	isort  --profile black --atomic $(SOURCE_FOLDER)
-	black $(SOURCE_FOLDER)
+	isort  --profile black --atomic $(SOURCE_FOLDER) tests/*
+	black $(SOURCE_FOLDER) tests/*
 
 .PHONY: tests
 tests: test-non-emulation test-emulation
