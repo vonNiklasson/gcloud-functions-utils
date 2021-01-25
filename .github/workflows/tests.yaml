@@ -3,7 +3,7 @@ name: Run tests
 on: [push]
 
 jobs:
-  deploy:
+  test:
     name: Tests
     runs-on: ubuntu-latest
 
@@ -23,4 +23,5 @@ jobs:
       run: make update
 
     - name: Run tests
-      run: python -m pytest tests
+      run: make tests
+      timeout-minutes: 3
