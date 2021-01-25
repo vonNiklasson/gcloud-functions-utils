@@ -1,7 +1,7 @@
 import base64
 import binascii
 from datetime import datetime
-from typing import Dict
+from typing import Dict, Union, Any
 
 
 class EventParser:
@@ -10,9 +10,9 @@ class EventParser:
     attributes: Dict[str, str]
     message_id: int
     publish_time: datetime
-    orderingKey: str
+    orderingKey: Union[str, None]
 
-    def __init__(self, event):
+    def __init__(self, event: Union[Dict, Any]):
         if "data" in event:
             try:
                 self.data: str = base64.b64decode(event["data"]).decode("utf-8")
@@ -39,4 +39,4 @@ class EventParser:
         if "orderingKey" in event:
             self.ordering_key: str = event["orderingKey"]
         else:
-            self.orderingKey = ""
+            self.orderingKey = None
