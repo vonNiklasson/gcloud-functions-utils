@@ -2,13 +2,13 @@ import pytest
 from tests.functions import pubsub
 from tests.utils import is_base64_encoded
 
-from gcloud_functions_utils.test_tools.client.pubsub import PubSubClient
+from gcloud_functions_utils.test_tools.local_client.pubsub import LocalPubSubClient
 
 
 @pytest.mark.emulation
 def test_parser_event_data_is_not_base64_encoded():
     original_message = "Hello there!"
-    with PubSubClient(pubsub.parser_print_event_data) as client:
+    with LocalPubSubClient(pubsub.parser_print_event_data) as client:
         response = client.publish(original_message)
         assert response.status_code == 200
         output = client.get_output()
@@ -18,7 +18,7 @@ def test_parser_event_data_is_not_base64_encoded():
 @pytest.mark.emulation
 def test_parser_decodes_data():
     original_message = "Hello there!"
-    with PubSubClient(pubsub.parser_print_event_data) as client:
+    with LocalPubSubClient(pubsub.parser_print_event_data) as client:
         response = client.publish(original_message)
         assert response.status_code == 200
         output = client.get_output()
@@ -31,7 +31,7 @@ def test_parser_attributes_are_preserved():
         "Hello": "there!",
         "General": "Kenobi",
     }
-    with PubSubClient(pubsub.parser_print_event_attributes) as client:
+    with LocalPubSubClient(pubsub.parser_print_event_attributes) as client:
         response = client.publish("", attributes=attributes)
         assert response.status_code == 200
         output = client.get_json()

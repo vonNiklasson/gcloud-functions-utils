@@ -11,7 +11,7 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
 
-class PubSubPublisher:
+class LocalPubSubPublisher:
     def __init__(self, url: str, session: Session, process: subprocess.Popen):
         self.url = url
         self.session = session
@@ -40,18 +40,18 @@ class PubSubPublisher:
         return json.loads(output.replace("'", '"'))
 
 
-class PubSubClient:
+class LocalPubSubClient:
 
     PORT_ID = 8080
 
     @staticmethod
     def get_next_port():
-        PubSubClient.PORT_ID += 1
-        return PubSubClient.PORT_ID - 1
+        LocalPubSubClient.PORT_ID += 1
+        return LocalPubSubClient.PORT_ID - 1
 
     def __init__(self, func: Callable, port: int = None):
         self.func = func
-        self.port = PubSubClient.get_next_port() if port is None else port
+        self.port = LocalPubSubClient.get_next_port() if port is None else port
         self.url = f"http://localhost:{self.port}/"
         self.retry_adapter = HTTPAdapter(max_retries=Retry(total=2, backoff_factor=1))
 
@@ -78,7 +78,7 @@ class PubSubClient:
             stdout=subprocess.PIPE,
         )
 
-        return PubSubPublisher(self.url, self.session, self.process)
+        return LocalPubSubPublisher(self.url, self.session, self.process)
 
     def __exit__(self, exception_type, exception_value, traceback):
         if self.process.poll() is None:

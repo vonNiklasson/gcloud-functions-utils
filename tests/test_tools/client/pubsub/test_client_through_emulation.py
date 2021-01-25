@@ -4,19 +4,19 @@ import pytest
 from tests.functions import pubsub
 from tests.utils import is_base64_encoded, is_byte_encoded
 
-from gcloud_functions_utils.test_tools.client.pubsub import PubSubClient
+from gcloud_functions_utils.test_tools.local_client.pubsub import LocalPubSubClient
 
 
 @pytest.mark.emulation
 def test_emulated_pubsub():
-    with PubSubClient(pubsub.basic_print_event) as client:
+    with LocalPubSubClient(pubsub.basic_print_event) as client:
         response = client.publish("")
         assert response.status_code == 200
 
 
 @pytest.mark.emulation
 def test_event_payload_has_data():
-    with PubSubClient(pubsub.basic_print_event) as client:
+    with LocalPubSubClient(pubsub.basic_print_event) as client:
         response = client.publish("")
         assert response.status_code == 200
         output = client.get_json()
@@ -25,7 +25,7 @@ def test_event_payload_has_data():
 
 @pytest.mark.emulation
 def test_event_data_is_base64_encoded():
-    with PubSubClient(pubsub.basic_print_event) as client:
+    with LocalPubSubClient(pubsub.basic_print_event) as client:
         response = client.publish("")
         assert response.status_code == 200
         output = client.get_json()
@@ -35,7 +35,7 @@ def test_event_data_is_base64_encoded():
 @pytest.mark.emulation
 def test_event_data_byte_encoded():
     original_message = "Hello there!"
-    with PubSubClient(pubsub.basic_print_event) as client:
+    with LocalPubSubClient(pubsub.basic_print_event) as client:
         response = client.publish(original_message)
         assert response.status_code == 200
         output = client.get_json()
@@ -46,7 +46,7 @@ def test_event_data_byte_encoded():
 @pytest.mark.emulation
 def test_event_data_is_preserved():
     original_message = "Hello there!"
-    with PubSubClient(pubsub.basic_print_event) as client:
+    with LocalPubSubClient(pubsub.basic_print_event) as client:
         response = client.publish(original_message)
         assert response.status_code == 200
         output = client.get_json()
@@ -57,7 +57,7 @@ def test_event_data_is_preserved():
 @pytest.mark.emulation
 def test_event_attributes_is_transferred():
     attributes = {"Hello": "there!"}
-    with PubSubClient(pubsub.basic_print_event) as client:
+    with LocalPubSubClient(pubsub.basic_print_event) as client:
         response = client.publish("", attributes=attributes)
         assert response.status_code == 200
         output = client.get_json()
@@ -71,7 +71,7 @@ def test_event_attributes_are_preserved():
         "Hello": "there!",
         "General": "Kenobi",
     }
-    with PubSubClient(pubsub.basic_print_event) as client:
+    with LocalPubSubClient(pubsub.basic_print_event) as client:
         response = client.publish("", attributes=attributes)
         assert response.status_code == 200
         output = client.get_json()
