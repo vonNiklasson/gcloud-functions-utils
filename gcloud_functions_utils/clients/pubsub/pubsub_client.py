@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Dict, List, Union
+from typing import Dict, List, Optional, Union
 
 from google.cloud import pubsub_v1
 from google.cloud.pubsub_v1.publisher.futures import Future
@@ -46,7 +46,8 @@ class PubSubClient:
         attributes: Dict = None,
         ordering_key: str = None,
         project_id: str = None,
-    ) -> Future:
+        auto_batch: bool = False,
+    ) -> Optional[Future]:
         topic_path = self.get_topic_path(topic_id, project_id)
 
         cleaned_data = PubSubClient._clean_data(data)
@@ -61,7 +62,10 @@ class PubSubClient:
 
         future = self.publisher.publish(topic=topic_path, data=encoded_data, **kwargs)
 
-        return future
+        if auto_batch:
+            future.add_done_callback(lambda x: ...)
+        else:
+            return future
 
     @staticmethod
     def _clean_data(data):
