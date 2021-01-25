@@ -8,7 +8,10 @@ from .context_mock import ContextMock
 class ContextFactory:
     @staticmethod
     def build(
-        event_id: int = None, timestamp: datetime = None, event_type: Union[ContextEventType, str] = None, resource: str = None
+        event_id: int = None,
+        timestamp: datetime = None,
+        event_type: Union[ContextEventType, str] = None,
+        resource: str = None,
     ):
 
         if event_id is None:

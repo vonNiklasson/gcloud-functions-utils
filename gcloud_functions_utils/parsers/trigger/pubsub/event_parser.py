@@ -1,7 +1,7 @@
 import base64
 import binascii
 from datetime import datetime
-from typing import Dict, Union, Any
+from typing import Any, Dict, Union
 
 
 class EventParser:

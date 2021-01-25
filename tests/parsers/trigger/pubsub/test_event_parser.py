@@ -12,7 +12,7 @@ def test_parse_from_factory():
 
 
 def test_parsed_factory_decodes_data():
-    original_message = 'Hello there!'
-    event = EventFactory.build(data='Hello there!')
+    original_message = "Hello there!"
+    event = EventFactory.build(data="Hello there!")
     parsed_event = EventParser(event)
     assert parsed_event.data == original_message
