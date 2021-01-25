@@ -53,7 +53,7 @@ class PubSubClient:
         self.func = func
         self.port = PubSubClient.get_next_port() if port is None else port
         self.url = f"http://localhost:{self.port}/"
-        self.retry_adapter = HTTPAdapter(max_retries=Retry(total=6, backoff_factor=1))
+        self.retry_adapter = HTTPAdapter(max_retries=Retry(total=2, backoff_factor=1))
 
         self.target = self.func.__name__
         self.source = inspect.getfile(self.func)
