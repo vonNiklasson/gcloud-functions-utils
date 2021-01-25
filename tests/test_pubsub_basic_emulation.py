@@ -1,17 +1,17 @@
 import base64
 from gcloud_functions_utils.test_tools.clients.pubsub import PubSubClient
-from tests.functions import dummy
+from tests.functions import pubsub
 from tests.utils import is_byte_encoded, is_base64_encoded
 
 
 def test_emulated_pubsub():
-    with PubSubClient(dummy.dummy_function, 8080) as client:
+    with PubSubClient(pubsub.basic_print_event) as client:
         response = client.publish('')
         assert response.status_code == 200
 
 
 def test_event_payload_has_data():
-    with PubSubClient(dummy.dummy_function, 8081) as client:
+    with PubSubClient(pubsub.basic_print_event) as client:
         response = client.publish('')
         assert response.status_code == 200
         output = client.get_json()
@@ -19,7 +19,7 @@ def test_event_payload_has_data():
 
 
 def test_event_data_is_base64_encoded():
-    with PubSubClient(dummy.dummy_function, 8082) as client:
+    with PubSubClient(pubsub.basic_print_event) as client:
         response = client.publish('')
         assert response.status_code == 200
         output = client.get_json()
@@ -27,8 +27,8 @@ def test_event_data_is_base64_encoded():
 
 
 def test_event_data_byte_encoded():
-    with PubSubClient(dummy.dummy_function, 8083) as client:
-        original_message = "Hello there!"
+    original_message = "Hello there!"
+    with PubSubClient(pubsub.basic_print_event) as client:
         response = client.publish(original_message)
         assert response.status_code == 200
         output = client.get_json()
@@ -37,8 +37,8 @@ def test_event_data_byte_encoded():
 
 
 def test_event_data_is_preserved():
-    with PubSubClient(dummy.dummy_function, 8084) as client:
-        original_message = "Hello there!"
+    original_message = "Hello there!"
+    with PubSubClient(pubsub.basic_print_event) as client:
         response = client.publish(original_message)
         assert response.status_code == 200
         output = client.get_json()
@@ -47,8 +47,9 @@ def test_event_data_is_preserved():
 
 
 def test_event_attributes_is_transferred():
-    with PubSubClient(dummy.dummy_function, 8084) as client:
-        response = client.publish('', attributes={'Hello': 'there!'})
+    attributes = {'Hello': 'there!'}
+    with PubSubClient(pubsub.basic_print_event) as client:
+        response = client.publish('', attributes=attributes)
         assert response.status_code == 200
         output = client.get_json()
         assert 'attributes' in output
@@ -56,11 +57,11 @@ def test_event_attributes_is_transferred():
 
 
 def test_event_attributes_are_preserved():
-    with PubSubClient(dummy.dummy_function, 8084) as client:
-        attributes = {
-            'Hello': 'there!',
-            'General': 'Kenobi',
-        }
+    attributes = {
+        'Hello': 'there!',
+        'General': 'Kenobi',
+    }
+    with PubSubClient(pubsub.basic_print_event) as client:
         response = client.publish('', attributes=attributes)
         assert response.status_code == 200
         output = client.get_json()

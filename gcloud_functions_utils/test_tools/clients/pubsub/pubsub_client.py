@@ -41,9 +41,17 @@ class PubSubPublisher:
 
 
 class PubSubClient:
-    def __init__(self, func: Callable, port: int = 8888):
+
+    PORT_ID = 8080
+
+    @staticmethod
+    def get_next_port():
+        PubSubClient.PORT_ID += 1
+        return PubSubClient.PORT_ID - 1
+
+    def __init__(self, func: Callable, port: int = None):
         self.func = func
-        self.port = port
+        self.port = PubSubClient.get_next_port() if port is None else port
         self.url = f"http://localhost:{self.port}/"
         self.retry_adapter = HTTPAdapter(max_retries=Retry(total=6, backoff_factor=1))
 
