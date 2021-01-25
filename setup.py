@@ -20,7 +20,7 @@ setuptools.setup(
     packages=packages,
     install_requires=[],
     extras_require={
-        'test_tools': [
+        'test-tools': [
             "functions-framework==2.1.0",
             "requests==2.25.1"
         ]
