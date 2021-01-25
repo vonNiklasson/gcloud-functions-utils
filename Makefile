@@ -28,8 +28,15 @@ reformat:
 	black $(SOURCE_FOLDER)
 
 .PHONY: tests
-tests:
-	$(PYTHON) -m pytest tests/
+tests: test-non-emulation test-emulation
+
+.PHONY: test-non-emulation
+test-non-emulation:
+	$(PYTHON) -m pytest tests/ -m "not emulation"
+
+.PHONY: test-emulation
+test-emulation:
+	$(PYTHON) -m pytest tests/ -m "emulation"
 
 .PHONY: update
 update:

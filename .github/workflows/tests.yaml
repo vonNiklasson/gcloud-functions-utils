@@ -25,6 +25,9 @@ jobs:
     - name: Install self
       run: pip install .
 
-    - name: Run tests
-      run: make tests
+    - name: Run tests (non-emulation)
+      run: make test-non-emulation
+
+    - name: Run tests (emulation)
+      run: make test-emulation
       timeout-minutes: 3

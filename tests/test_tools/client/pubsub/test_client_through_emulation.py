@@ -1,15 +1,20 @@
 import base64
-from gcloud_functions_utils.test_tools.clients.pubsub import PubSubClient
+
+import pytest
+
+from gcloud_functions_utils.test_tools.client.pubsub import PubSubClient
 from tests.functions import pubsub
 from tests.utils import is_byte_encoded, is_base64_encoded
 
 
+@pytest.mark.emulation
 def test_emulated_pubsub():
     with PubSubClient(pubsub.basic_print_event) as client:
         response = client.publish('')
         assert response.status_code == 200
 
 
+@pytest.mark.emulation
 def test_event_payload_has_data():
     with PubSubClient(pubsub.basic_print_event) as client:
         response = client.publish('')
@@ -18,6 +23,7 @@ def test_event_payload_has_data():
         assert 'data' in output
 
 
+@pytest.mark.emulation
 def test_event_data_is_base64_encoded():
     with PubSubClient(pubsub.basic_print_event) as client:
         response = client.publish('')
@@ -26,6 +32,7 @@ def test_event_data_is_base64_encoded():
         assert is_base64_encoded(output['data'])
 
 
+@pytest.mark.emulation
 def test_event_data_byte_encoded():
     original_message = "Hello there!"
     with PubSubClient(pubsub.basic_print_event) as client:
@@ -36,6 +43,7 @@ def test_event_data_byte_encoded():
         assert is_byte_encoded(data_message)
 
 
+@pytest.mark.emulation
 def test_event_data_is_preserved():
     original_message = "Hello there!"
     with PubSubClient(pubsub.basic_print_event) as client:
@@ -46,6 +54,7 @@ def test_event_data_is_preserved():
         assert data_message == original_message
 
 
+@pytest.mark.emulation
 def test_event_attributes_is_transferred():
     attributes = {'Hello': 'there!'}
     with PubSubClient(pubsub.basic_print_event) as client:
@@ -56,6 +65,7 @@ def test_event_attributes_is_transferred():
         assert output['attributes'] is not None
 
 
+@pytest.mark.emulation
 def test_event_attributes_are_preserved():
     attributes = {
         'Hello': 'there!',
