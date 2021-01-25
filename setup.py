@@ -10,7 +10,7 @@ for package in setuptools.find_packages():
 
 setuptools.setup(
     name="gcloud-functions-utils",
-    version="0.4.1",
+    version="0.5.0",
     author="Johan Niklasson",
     author_email="johan@niklasson.me",
     description="",
