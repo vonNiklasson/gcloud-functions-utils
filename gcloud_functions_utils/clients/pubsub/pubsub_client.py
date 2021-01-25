@@ -7,13 +7,22 @@ from google.cloud.pubsub_v1.publisher.futures import Future
 
 
 class PubSubClient:
-    def __init__(self, project_id: str = None):
+    def __init__(self, project_id: str = None, batch: bool = False):
         if project_id is not None:
             self.initial_project_id = project_id
         else:
             self.initial_project_id = None
 
-        self.publisher = pubsub_v1.PublisherClient()
+        if batch:
+            self.publisher = pubsub_v1.PublisherClient(
+                batch_settings=pubsub_v1.types.BatchSettings(
+                    max_messages=100,
+                    max_bytes=4096,
+                    max_latency=1,
+                )
+            )
+        else:
+            self.publisher = pubsub_v1.PublisherClient()
 
     @property
     def project_id(self):
@@ -37,7 +46,7 @@ class PubSubClient:
         attributes: Dict = None,
         ordering_key: str = None,
         project_id: str = None,
-    ):
+    ) -> Future:
         topic_path = self.get_topic_path(topic_id, project_id)
 
         cleaned_data = PubSubClient._clean_data(data)
