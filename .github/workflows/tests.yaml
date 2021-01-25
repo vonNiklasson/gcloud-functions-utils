@@ -22,6 +22,9 @@ jobs:
     - name: Install dependencies
       run: make update
 
+    - name: Install self
+      run: pip install .
+
     - name: Run tests
       run: make tests
       timeout-minutes: 3
