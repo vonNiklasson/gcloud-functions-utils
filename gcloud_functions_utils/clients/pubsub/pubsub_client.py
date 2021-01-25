@@ -44,7 +44,7 @@ class PubSubClient:
         encoded_data = cleaned_data.encode("utf-8")
 
         kwargs = {}
-        if type(attributes) == Dict and attributes is not None:
+        if type(attributes) == dict and attributes is not None:
             for attr_key, attr_value in attributes.items():
                 kwargs[attr_key] = attr_value
         if ordering_key is not None and len(ordering_key) > 0:
@@ -61,7 +61,7 @@ class PubSubClient:
             return data
         elif data_type == int:
             return str(data)
-        elif data_type == Dict or data_type == List:
+        elif data_type == dict or data_type == list:
             return json.dumps(data)
         else:
             return str(data)
