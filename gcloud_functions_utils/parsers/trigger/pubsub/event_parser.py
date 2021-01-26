@@ -17,7 +17,7 @@ class EventParser:
             try:
                 self.data: str = base64.b64decode(event["data"]).decode("utf-8")
             except binascii.Error:
-                pass
+                self.data = event["data"]
         else:
             self.data = ""
 

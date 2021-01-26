@@ -10,7 +10,7 @@ for package in setuptools.find_packages():
 
 setuptools.setup(
     name="gcloud-functions-utils",
-    version="0.7.0",
+    version="0.8.0",
     author="Johan Niklasson",
     author_email="johan@niklasson.me",
     description="",
@@ -19,12 +19,12 @@ setuptools.setup(
     url="https://github.com/vonNiklasson/gcloud-functions-utils",
     packages=packages,
     install_requires=[
-        "google-cloud-pubsub>=2.2.0"
+        "google-cloud-pubsub>=2.2.0, <3"
     ],
     extras_require={
         "test-tools": [
-            "functions-framework==2.1.0",
-            "requests==2.25.1"
+            "functions-framework>=2.1.0, <3",
+            "requests>=2.24.0, <3"
         ]
     },
     classifiers=[

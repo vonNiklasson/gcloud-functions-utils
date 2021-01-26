@@ -46,7 +46,7 @@ class PubSubClient:
         attributes: Dict = None,
         ordering_key: str = None,
         project_id: str = None,
-        auto_batch: bool = False,
+        omit_callback: bool = False,
     ) -> Optional[Future]:
         topic_path = self.get_topic_path(topic_id, project_id)
 
@@ -62,7 +62,7 @@ class PubSubClient:
 
         future = self.publisher.publish(topic=topic_path, data=encoded_data, **kwargs)
 
-        if auto_batch:
+        if omit_callback:
             future.add_done_callback(lambda x: ...)
         else:
             return future
