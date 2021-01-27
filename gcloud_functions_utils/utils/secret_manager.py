@@ -14,8 +14,14 @@ class SecretManager:
         if self.project_id is None:
             raise Exception("Cannot find project id. Please provide one or export it to GCP_PROJECT")
 
-        # Create the Secret Manager client.
-        self.client = secretmanager.SecretManagerServiceClient()
+    @property
+    def client(self):
+        # Only create the secretmanager on demand
+        if self._client is None:
+            # Create the Secret Manager client.
+            self._client = secretmanager.SecretManagerServiceClient()
+
+        return self._client
 
     def get(self, secret_id: str, version_id: Union[str, int] = "latest"):
         if self.check_env and secret_id in os.environ:
