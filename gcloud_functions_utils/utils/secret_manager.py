@@ -9,7 +9,7 @@ class SecretManager:
         # Get the default project id
         self.project_id = project_id if project_id is not None else os.getenv("GCP_PROJECT")
 
-        if project_id is None:
+        if self.project_id is None:
             raise Exception("Cannot find project id. Please provide one or export it to GCP_PROJECT")
 
     def get(self, secret_id: str, version_id: Union[str, int] = "latest"):
