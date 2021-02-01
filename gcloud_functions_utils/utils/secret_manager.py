@@ -14,9 +14,11 @@ class SecretManager:
         if self.project_id is None:
             raise Exception("Cannot find project id. Please provide one or export it to GCP_PROJECT")
 
+        self._client = None
+
     @property
     def client(self):
-        # Only create the secretmanager on demand
+        # Only create the Secret Manager client on demand
         if self._client is None:
             # Create the Secret Manager client.
             self._client = secretmanager.SecretManagerServiceClient()
